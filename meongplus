@@ -1,0 +1,645 @@
+"use client"
+
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
+import { Badge } from "@/components/ui/badge"
+import { Star, Heart, Shield, Zap, Users, Award, Phone, Mail, MapPin } from "lucide-react"
+
+export default function MeonginWebsite() {
+  const [quizStep, setQuizStep] = useState(0)
+  const [quizAnswers, setQuizAnswers] = useState<string[]>([])
+  const [showQuizResult, setShowQuizResult] = useState(false)
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    address: "",
+    variant: "",
+    quantity: 1,
+  })
+
+  const quizQuestions = [
+    {
+      question: "Berapa usia kucingmu?",
+      options: ["Kitten (0-1 tahun)", "Dewasa (1-7 tahun)", "Senior (7+ tahun)"],
+    },
+    {
+      question: "Bagaimana aktivitas kucingmu?",
+      options: ["Sangat aktif", "Cukup aktif", "Kurang aktif"],
+    },
+    {
+      question: "Apakah kucingmu memiliki masalah kesehatan?",
+      options: ["Pencernaan sensitif", "Bulu rontok", "Tidak ada masalah"],
+    },
+  ]
+
+  const handleQuizAnswer = (answer: string) => {
+    const newAnswers = [...quizAnswers, answer]
+    setQuizAnswers(newAnswers)
+
+    if (quizStep < quizQuestions.length - 1) {
+      setQuizStep(quizStep + 1)
+    } else {
+      setShowQuizResult(true)
+    }
+  }
+
+  const resetQuiz = () => {
+    setQuizStep(0)
+    setQuizAnswers([])
+    setShowQuizResult(false)
+  }
+
+  const getRecommendation = () => {
+    if (quizAnswers.includes("Kitten (0-1 tahun)")) return "Meongin+ Kitten Formula"
+    if (quizAnswers.includes("Pencernaan sensitif")) return "Meongin+ Sensitive Care"
+    return "Meongin+ Adult Premium"
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-yellow-50 to-blue-50">
+      {/* Header */}
+      <header className="bg-white/80 backdrop-blur-sm border-b border-yellow-200 sticky top-0 z-50">
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="w-10 h-10 bg-gradient-to-br from-yellow-300 to-blue-300 rounded-full flex items-center justify-center">
+              <span className="text-xl">🐱</span>
+            </div>
+            <h1 className="text-2xl font-bold text-gray-800">Meongin+</h1>
+          </div>
+          <nav className="hidden md:flex gap-6">
+            <a href="#produk" className="text-gray-600 hover:text-yellow-600 transition-colors">
+              Produk
+            </a>
+            <a href="#manfaat" className="text-gray-600 hover:text-yellow-600 transition-colors">
+              Manfaat
+            </a>
+            <a href="#testimoni" className="text-gray-600 hover:text-yellow-600 transition-colors">
+              Testimoni
+            </a>
+            <a href="#harga" className="text-gray-600 hover:text-yellow-600 transition-colors">
+              Harga
+            </a>
+            <a href="#order" className="text-gray-600 hover:text-yellow-600 transition-colors">
+              Order
+            </a>
+          </nav>
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      <section className="py-20 px-4">
+        <div className="container mx-auto text-center">
+          <div className="mb-8 relative">
+            <div className="w-64 h-64 mx-auto mb-8 rounded-full overflow-hidden border-8 border-yellow-200 shadow-2xl">
+              <img
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/cat-4912213_1920.jpg-TUdjnRjWfclbLkp9vcXjEBP0pIppa8.jpeg"
+                alt="Anak kucing lucu dengan mata biru yang sehat dan menggemaskan"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="absolute -top-4 -right-4 animate-bounce">
+              <div className="w-16 h-16 bg-yellow-300 rounded-full flex items-center justify-center shadow-lg">
+                <Heart className="w-8 h-8 text-red-500 fill-current animate-pulse" />
+              </div>
+            </div>
+          </div>
+
+          <h1 className="text-4xl md:text-6xl font-bold text-gray-800 mb-6">
+            <span className="text-yellow-600">Meongin+</span>
+            <br />
+            <span className="text-2xl md:text-3xl text-blue-600">Cinta Kucingmu, Lewat Makanannya.</span>
+          </h1>
+
+          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+            Makanan kucing premium dengan nutrisi lengkap untuk kesehatan optimal si meong kesayangan
+          </p>
+
+          <Button
+            size="lg"
+            className="bg-gradient-to-r from-yellow-400 to-blue-400 hover:from-yellow-500 hover:to-blue-500 text-white px-8 py-4 text-lg rounded-full shadow-lg transform hover:scale-105 transition-all duration-300"
+          >
+            🐾 Coba Sekarang
+          </Button>
+        </div>
+      </section>
+
+      {/* Tentang Produk */}
+      <section id="produk" className="py-16 px-4 bg-white/50">
+        <div className="container mx-auto">
+          <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">
+            Kenapa Pilih <span className="text-yellow-600">Meongin+</span>?
+          </h2>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <Card className="border-yellow-200 hover:shadow-lg transition-shadow">
+              <CardHeader className="text-center">
+                <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Shield className="w-8 h-8 text-yellow-600" />
+                </div>
+                <CardTitle className="text-lg">Bahan Alami</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600 text-center">100% bahan alami pilihan tanpa pengawet berbahaya</p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-blue-200 hover:shadow-lg transition-shadow">
+              <CardHeader className="text-center">
+                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Zap className="w-8 h-8 text-blue-600" />
+                </div>
+                <CardTitle className="text-lg">Tinggi Protein</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600 text-center">Protein berkualitas tinggi untuk pertumbuhan optimal</p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-yellow-200 hover:shadow-lg transition-shadow">
+              <CardHeader className="text-center">
+                <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Heart className="w-8 h-8 text-yellow-600" />
+                </div>
+                <CardTitle className="text-lg">Omega 3 & 6</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600 text-center">Asam lemak esensial untuk bulu sehat dan berkilau</p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-blue-200 hover:shadow-lg transition-shadow">
+              <CardHeader className="text-center">
+                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Award className="w-8 h-8 text-blue-600" />
+                </div>
+                <CardTitle className="text-lg">Tanpa Pewarna</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600 text-center">Bebas pewarna buatan dan bahan kimia berbahaya</p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Manfaat */}
+      <section id="manfaat" className="py-16 px-4">
+        <div className="container mx-auto">
+          <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">
+            Manfaat untuk <span className="text-blue-600">Si Meong</span>
+          </h2>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="text-center">
+              <div className="w-32 h-32 bg-gradient-to-br from-yellow-200 to-yellow-300 rounded-full flex items-center justify-center mx-auto mb-6">
+                <img
+                  src="/placeholder.svg?height=80&width=80"
+                  alt="Bulu lebat"
+                  className="w-20 h-20 rounded-full object-cover"
+                />
+              </div>
+              <h3 className="text-xl font-bold text-gray-800 mb-4">Bulu Lebat & Berkilau</h3>
+              <p className="text-gray-600">Omega 3 & 6 membuat bulu kucing lebih tebal, lembut, dan berkilau alami</p>
+            </div>
+
+            <div className="text-center">
+              <div className="w-32 h-32 bg-gradient-to-br from-blue-200 to-blue-300 rounded-full flex items-center justify-center mx-auto mb-6">
+                <img
+                  src="/placeholder.svg?height=80&width=80"
+                  alt="Pencernaan sehat"
+                  className="w-20 h-20 rounded-full object-cover"
+                />
+              </div>
+              <h3 className="text-xl font-bold text-gray-800 mb-4">Pencernaan Sehat</h3>
+              <p className="text-gray-600">Probiotik alami membantu menjaga kesehatan sistem pencernaan kucing</p>
+            </div>
+
+            <div className="text-center">
+              <div className="w-32 h-32 bg-gradient-to-br from-yellow-200 to-blue-200 rounded-full flex items-center justify-center mx-auto mb-6">
+                <img
+                  src="/placeholder.svg?height=80&width=80"
+                  alt="Kucing aktif"
+                  className="w-20 h-20 rounded-full object-cover"
+                />
+              </div>
+              <h3 className="text-xl font-bold text-gray-800 mb-4">Kucing Lebih Aktif</h3>
+              <p className="text-gray-600">Nutrisi seimbang memberikan energi optimal untuk aktivitas harian</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Mini Quiz Interaktif */}
+      <section className="py-16 px-4 bg-gradient-to-r from-yellow-100 to-blue-100">
+        <div className="container mx-auto max-w-2xl">
+          <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">🎯 Quiz: Temukan Meongin+ yang Tepat!</h2>
+
+          <Card className="border-2 border-yellow-300">
+            <CardContent className="p-8">
+              {!showQuizResult ? (
+                <div>
+                  <div className="mb-6">
+                    <div className="flex justify-between items-center mb-4">
+                      <span className="text-sm text-gray-500">
+                        Pertanyaan {quizStep + 1} dari {quizQuestions.length}
+                      </span>
+                      <div className="flex gap-1">
+                        {quizQuestions.map((_, index) => (
+                          <div
+                            key={index}
+                            className={`w-3 h-3 rounded-full ${index <= quizStep ? "bg-yellow-400" : "bg-gray-200"}`}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                    <h3 className="text-xl font-semibold text-gray-800 mb-6">{quizQuestions[quizStep].question}</h3>
+                  </div>
+
+                  <div className="space-y-3">
+                    {quizQuestions[quizStep].options.map((option, index) => (
+                      <Button
+                        key={index}
+                        variant="outline"
+                        className="w-full text-left justify-start p-4 h-auto border-2 hover:border-yellow-400 hover:bg-yellow-50 bg-transparent"
+                        onClick={() => handleQuizAnswer(option)}
+                      >
+                        {option}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <div className="text-center">
+                  <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <Award className="w-10 h-10 text-green-600" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-800 mb-4">Rekomendasi untuk Kucingmu:</h3>
+                  <div className="bg-gradient-to-r from-yellow-200 to-blue-200 rounded-lg p-6 mb-6">
+                    <h4 className="text-xl font-bold text-gray-800">{getRecommendation()}</h4>
+                    <p className="text-gray-600 mt-2">Formulasi khusus sesuai kebutuhan kucingmu!</p>
+                  </div>
+                  <Button onClick={resetQuiz} className="bg-yellow-500 hover:bg-yellow-600 text-white">
+                    Ulangi Quiz
+                  </Button>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* Testimoni */}
+      <section id="testimoni" className="py-16 px-4 bg-white/50">
+        <div className="container mx-auto">
+          <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">
+            Kata Mereka tentang <span className="text-yellow-600">Meongin+</span>
+          </h2>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <Card className="border-yellow-200">
+              <CardHeader>
+                <div className="flex items-center gap-4">
+                  <img
+                    src="/placeholder.svg?height=50&width=50"
+                    alt="Sarah"
+                    className="w-12 h-12 rounded-full object-cover"
+                  />
+                  <div>
+                    <h4 className="font-semibold">Sarah, 28</h4>
+                    <div className="flex gap-1">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600">
+                  "Bulu Mochi jadi super lembut dan berkilau! Dia juga jadi lebih aktif bermain. Worth it banget!"
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-blue-200">
+              <CardHeader>
+                <div className="flex items-center gap-4">
+                  <img
+                    src="/placeholder.svg?height=50&width=50"
+                    alt="Ibu Rina"
+                    className="w-12 h-12 rounded-full object-cover"
+                  />
+                  <div>
+                    <h4 className="font-semibold">Ibu Rina, 35</h4>
+                    <div className="flex gap-1">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600">
+                  "Kucing saya yang sensitif pencernaan jadi jarang sakit perut. Terima kasih Meongin+!"
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-yellow-200">
+              <CardHeader>
+                <div className="flex items-center gap-4">
+                  <img
+                    src="/placeholder.svg?height=50&width=50"
+                    alt="Dimas"
+                    className="w-12 h-12 rounded-full object-cover"
+                  />
+                  <div>
+                    <h4 className="font-semibold">Dimas, 26</h4>
+                    <div className="flex gap-1">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600">
+                  "Harga sebanding dengan kualitas. Kucing saya doyan banget dan kesehatannya terjaga!"
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Harga & Varian */}
+      <section id="harga" className="py-16 px-4">
+        <div className="container mx-auto">
+          <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">
+            Pilih <span className="text-blue-600">Ukuran</span> yang Tepat
+          </h2>
+
+          <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            <Card className="border-2 border-gray-200 hover:border-yellow-400 transition-colors">
+              <CardHeader className="text-center">
+                <Badge variant="secondary" className="w-fit mx-auto mb-2">
+                  Coba Dulu
+                </Badge>
+                <CardTitle className="text-xl">Small Pack</CardTitle>
+                <CardDescription>500g - 1 minggu</CardDescription>
+                <div className="text-3xl font-bold text-gray-800 mt-4">
+                  Rp 45.000
+                  <span className="text-sm text-gray-500 font-normal">/pack</span>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2 text-sm text-gray-600">
+                  <li>✓ Cocok untuk trial</li>
+                  <li>✓ 1-2 kucing dewasa</li>
+                  <li>✓ Kemasan praktis</li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            <Card className="border-2 border-yellow-400 relative">
+              <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                <Badge className="bg-yellow-400 text-black">Paling Populer</Badge>
+              </div>
+              <CardHeader className="text-center">
+                <CardTitle className="text-xl">Medium Pack</CardTitle>
+                <CardDescription>2kg - 1 bulan</CardDescription>
+                <div className="text-3xl font-bold text-gray-800 mt-4">
+                  Rp 165.000
+                  <span className="text-sm text-gray-500 font-normal">/pack</span>
+                </div>
+                <div className="text-sm text-green-600 font-semibold">Hemat Rp 15.000!</div>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2 text-sm text-gray-600">
+                  <li>✓ Value terbaik</li>
+                  <li>✓ 2-3 kucing dewasa</li>
+                  <li>✓ Kemasan zip lock</li>
+                  <li>✓ Free ongkir*</li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            <Card className="border-2 border-gray-200 hover:border-blue-400 transition-colors">
+              <CardHeader className="text-center">
+                <Badge variant="secondary" className="w-fit mx-auto mb-2">
+                  Hemat Banget
+                </Badge>
+                <CardTitle className="text-xl">Large Pack</CardTitle>
+                <CardDescription>5kg - 2.5 bulan</CardDescription>
+                <div className="text-3xl font-bold text-gray-800 mt-4">
+                  Rp 375.000
+                  <span className="text-sm text-gray-500 font-normal">/pack</span>
+                </div>
+                <div className="text-sm text-green-600 font-semibold">Hemat Rp 50.000!</div>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2 text-sm text-gray-600">
+                  <li>✓ Paling ekonomis</li>
+                  <li>✓ Multi kucing/cattery</li>
+                  <li>✓ Kemasan premium</li>
+                  <li>✓ Free ongkir + bonus</li>
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Order Form & Meongin Club */}
+      <section id="order" className="py-16 px-4 bg-gradient-to-br from-yellow-100 to-blue-100">
+        <div className="container mx-auto max-w-4xl">
+          <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">
+            Pesan Sekarang & Join <span className="text-yellow-600">Meongin Club</span>!
+          </h2>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Order Form */}
+            <Card className="border-2 border-yellow-300">
+              <CardHeader>
+                <CardTitle className="text-xl text-center">🛒 Form Pemesanan</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <Label htmlFor="name">Nama Lengkap</Label>
+                  <Input
+                    id="name"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    placeholder="Masukkan nama lengkap"
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="phone">Nomor WhatsApp</Label>
+                  <Input
+                    id="phone"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    placeholder="08xxxxxxxxxx"
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="variant">Pilih Varian</Label>
+                  <select
+                    className="w-full p-2 border border-gray-300 rounded-md"
+                    value={formData.variant}
+                    onChange={(e) => setFormData({ ...formData, variant: e.target.value })}
+                  >
+                    <option value="">Pilih ukuran</option>
+                    <option value="small">Small Pack - Rp 45.000</option>
+                    <option value="medium">Medium Pack - Rp 165.000</option>
+                    <option value="large">Large Pack - Rp 375.000</option>
+                  </select>
+                </div>
+
+                <div>
+                  <Label htmlFor="quantity">Jumlah</Label>
+                  <Input
+                    id="quantity"
+                    type="number"
+                    min="1"
+                    value={formData.quantity}
+                    onChange={(e) => setFormData({ ...formData, quantity: Number.parseInt(e.target.value) })}
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="address">Alamat Lengkap</Label>
+                  <Textarea
+                    id="address"
+                    value={formData.address}
+                    onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                    placeholder="Alamat lengkap untuk pengiriman"
+                    rows={3}
+                  />
+                </div>
+
+                <Button className="w-full bg-gradient-to-r from-yellow-500 to-blue-500 hover:from-yellow-600 hover:to-blue-600 text-white">
+                  <Phone className="w-4 h-4 mr-2" />
+                  Pesan via WhatsApp
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* Meongin Club */}
+            <Card className="border-2 border-blue-300">
+              <CardHeader>
+                <CardTitle className="text-xl text-center">🎉 Join Meongin Club</CardTitle>
+                <CardDescription className="text-center">Dapatkan benefit eksklusif untuk member!</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4 mb-6">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center">
+                      <Users className="w-4 h-4 text-yellow-600" />
+                    </div>
+                    <span className="text-sm">Diskon 10% untuk pembelian kedua</span>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                      <Mail className="w-4 h-4 text-blue-600" />
+                    </div>
+                    <span className="text-sm">Tips perawatan kucing mingguan</span>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center">
+                      <Award className="w-4 h-4 text-yellow-600" />
+                    </div>
+                    <span className="text-sm">Akses early bird produk baru</span>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                      <Heart className="w-4 h-4 text-blue-600" />
+                    </div>
+                    <span className="text-sm">Komunitas cat lovers Indonesia</span>
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <Input placeholder="Email untuk newsletter" />
+                  <Button className="w-full bg-blue-500 hover:bg-blue-600 text-white">Join Meongin Club Gratis!</Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-gray-800 text-white py-12 px-4">
+        <div className="container mx-auto">
+          <div className="grid md:grid-cols-4 gap-8">
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-8 h-8 bg-gradient-to-br from-yellow-400 to-blue-400 rounded-full flex items-center justify-center">
+                  <span className="text-lg">🐱</span>
+                </div>
+                <h3 className="text-xl font-bold">Meongin+</h3>
+              </div>
+              <p className="text-gray-400 text-sm">
+                Makanan kucing premium untuk kesehatan optimal si meong kesayangan.
+              </p>
+            </div>
+
+            <div>
+              <h4 className="font-semibold mb-4">Kontak</h4>
+              <div className="space-y-2 text-sm text-gray-400">
+                <div className="flex items-center gap-2">
+                  <Phone className="w-4 h-4" />
+                  <span>+62 812-3456-7890</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Mail className="w-4 h-4" />
+                  <span>hello@meongin.id</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <MapPin className="w-4 h-4" />
+                  <span>Jakarta, Indonesia</span>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h4 className="font-semibold mb-4">Produk</h4>
+              <div className="space-y-2 text-sm text-gray-400">
+                <div>Kitten Formula</div>
+                <div>Adult Premium</div>
+                <div>Sensitive Care</div>
+                <div>Senior Care</div>
+              </div>
+            </div>
+
+            <div>
+              <h4 className="font-semibold mb-4">Ikuti Kami</h4>
+              <div className="space-y-2 text-sm text-gray-400">
+                <div>Instagram @meonginplus</div>
+                <div>TikTok @meonginplus</div>
+                <div>Facebook Meongin+</div>
+                <div>YouTube Meongin+</div>
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t border-gray-700 mt-8 pt-8 text-center text-sm text-gray-400">
+            <p>&copy; 2024 Meongin+. All rights reserved. Made with ❤️ for cat lovers.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  )
+}
